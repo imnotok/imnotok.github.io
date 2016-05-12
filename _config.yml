@@ -1,22 +1,22 @@
 # User Settings | Edit there as per required
 
 title: blog
-url: "http://ankitsultana.me"
-baseurl: "/blog"
+url: "http://imnotok.net"
+baseurl: 
 
 # This will show up at the top of index page
 site_heading: >
-    foo <span class="faded">'s blog</span>
+    I'm not <span class="faded">Okay</span>
 
-email: your@email.com
-author: yourname
+email: 545350081@qq.com
+author: BJ.y
 # This description will show up in google search results
 # (for index page) etc.
 description: >
     accent is, as Trump would put it, the best
 
 # This will what will show against &copy; in the footer
-copyright: blog
+copyright: BJ.y
 # Toggle your short bio, which will displayed on your index page
 # Just toggle it and run jekyll again to see
 intro: false         # Tip: Remove the span from site_heading if intro is set to true
@@ -32,7 +32,7 @@ short_bio: >
 permalink: /:title.html
 
 # Comments are powered by disqus
-comments: true
+comments: false
 
 # keep about_stub roughly 12 words long for best results
 # This will show up at the bottom of each post
@@ -43,15 +43,15 @@ about_stub: >
 
 about_footer: true
 
-twitter_username: AnkitSultana
+twitter_username: 
 github_username: imnotok
-facebook_id: yourusername
+facebook_id: 
 
 favicon: true
 favicon_location: "images/favicon.ico"
 
 profile_picture: images/temp.png
-paginate: 5
+paginate: 10
 paginate_path: "/page/:num"
 tracking_id: UA-69243698-7 # GA Tracking ID
 
