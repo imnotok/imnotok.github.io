@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Documentation</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="blog, accent, yourname, blog, jekyll">
+    <meta name="author" content="yourname">
+    
+    
+    
+    <meta name="description" content="accent is, as Trump would put it, the best
+">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,500,700|Ubuntu:400,300,300italic,500,700|Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="alternate" type="application/rss+xml" title="blog RSS" href="/feed.xml" />
+    <link rel="stylesheet" href="/blog/css/main.css">
+    
+        <link rel="icon" type="image/ico" href="images/favicon.ico">
+        <link rel="shortcut-icon" type="image/ico" href="images/favicon.ico">
+    
+    
+        <link rel="author" href="https://twitter.com/AnkitSultana">
+    
+    <!-- Facebook Open Graph -->
+    <meta name="og:description" content="accent is, as Trump would put it, the best
+">
+    <meta name="og:title" content="blog">
+    <meta name="og:url" content="http://ankitsultana.me/blog/documentation.html">
+    <meta name="og:type" content="article">
+    
+        <meta name="og:image" content="images/accent.png">
+    
+    
+        <meta name="fb:admins" content="yourusername">
+    
+    <!-- Twitter -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="blog">
+    <meta name="twitter:description" content="accent is, as Trump would put it, the best
+">
+    <meta name="twitter:url" content="http://ankitsultana.me/blog/documentation.html">
+    
+        <meta name="twitter:image" content="http://ankitsultana.me/images/accent.png?1234">
+    
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main">
+            <nav class="navbar">
+                <a href="/blog/">
+                    <span class="alignable pull-left back-outer">
+                        <span class="alignable pull-left back-inner">
+                        </span>
+                    </span>
+                </a>
+            </nav>
+            <div class="content container">
+    <div class="post-date">
+        <time>February 11, 2016 </time>
+    </div>
+    <h1 class="post-title">Documentation</h1>
+    <h3 id="installation">Installation</h3>
+
+<p>I’d strongly recommend you to fork <a href="http://github.com/bk2dcradle/accent">accent</a> and use the “upstream” strategy described on <a href="https://help.github.com/articles/fork-a-repo/">this page</a> to
+keep accent up to date.</p>
+
+<p>If you don’t want to do that, just clone <a href="http://github.com/bk2dcradle/accent">accent</a> and use</p>
+
+<figure class="highlight"><pre><code class="language-bash" data-lang="bash">bundle <span class="nb">exec </span>jekyll serve</code></pre></figure>
+
+<p>in the root of the accent directory, or,
+simply <a href="https://github.com/bk2dcradle/accent/archive/gh-pages.zip">download</a> accent.</p>
+
+<h3 id="customization">Customization</h3>
+
+<p>You can edit the variables in <code class="highlighter-rouge">_config.yml</code> as per your needs. Edit only the variables under the section marked <em>User Settings</em>.</p>
+
+<p>Most of the variables are self explanatory. Notes about few of the non obvious ones:</p>
+
+<ol>
+  <li>
+    <p>You can change the <strong>hex value</strong> of the variable <code class="highlighter-rouge">$accent-color</code> in <code class="highlighter-rouge">_sass/_style.scss</code> to any color value that you want. This will change the accent of the theme.</p>
+  </li>
+  <li>
+    <p>Set <code class="highlighter-rouge">intro</code> to <code class="highlighter-rouge">true</code> to reveal a short bio section on the index page.</p>
+  </li>
+  <li>
+    <p>Setting <code class="highlighter-rouge">about_footer</code> to <em>true</em> or <em>false</em> will turn the <code class="highlighter-rouge">about</code> section at the bottom of every post to <em>on</em> or <em>off</em> respectively.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">description</code> is the summary that will show up in places like facebook thumbnails,
+twitter cards and google search results.</p>
+  </li>
+</ol>
+
+<p><em>Note:</em> Don’t change any variable under <em>Build Settings</em>.</p>
+
+<hr />
+
+<h3 id="usage">Usage</h3>
+
+<ul>
+  <li>To create a new post, simply save the <code class="highlighter-rouge">.markdown</code> file in the <code class="highlighter-rouge">_posts</code> directory in the format.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-text" data-lang="text">year-month-day-name-of-the-file.markdown</code></pre></figure>
+
+<ul>
+  <li>
+    <p>For Syntax highlighting, accent uses <em>Rouge</em> which is the default highlighter in Jekyll 3 and above. If you don’t know how to highlight a code block, <a href="http://jekyllrb.com/docs/templates/">refer</a>.</p>
+  </li>
+  <li>
+    <p>To set up Google Analytics tracking id, just set the <code class="highlighter-rouge">tracking_id</code> variable in <code class="highlighter-rouge">_config.yml</code>.</p>
+  </li>
+  <li>
+    <p>For comments, <em>accent</em> uses <a class="button disabled">Disqus</a>. To set comments on your site, just paste the <strong>universal code</strong> in <code class="highlighter-rouge">_includes/disqus.html</code>.</p>
+  </li>
+</ul>
+
+<hr />
+
+<h3 id="license">License</h3>
+
+<p><a href="https://github.com/bk2dcradle/accent/blob/gh-pages/LICENSE">MIT</a>. Copyright © <a href="http://twitter.com/AnkitSultana">Ankit Sultana</a></p>
+
+</div>
+
+
+    <div class="container">
+    <hr />
+    
+        
+        
+            <div id="img-about">
+                <img class="about-img pull-left" src="images/temp.png">
+            </div>
+        
+        <div class="about-stub">
+            
+            <a class="different-highlight" href="about">
+                <h2 style="font-family: Montserrat">
+                    
+                        yourname
+                    
+                </h2>
+            </a>
+            
+                <p id="about-description" style="margin-top: 4px;">
+                    Keep this sentence less than 13 words or it won't look good.
+
+                </p>
+            
+        </div>
+    
+</div>
+<div style="clear:both"></div>
+
+
+
+        </div>
+    </div>
+    <footer>
+    
+
+    
+    <div class="container page-suggestion">
+        
+            <a class="button alignable pull-left" href="http://ankitsultana.me/blog/features.html">
+                &larr; Features
+            </a>
+        
+        
+            <a class="button alignable pull-right" href="http://ankitsultana.me/blog/welcome-to-jekyll.html">
+                Welcome To Jekyll &rarr;
+            </a>
+        
+    </div>
+    <div style="clear:both"></div>
+
+
+    
+    <hr />
+    <div class="user-footer">
+        <div class="copyright alignable pull-left">
+            
+                <h2> &copy;blog</h2>
+            
+        </div>
+        <div class="alignable pull-right">
+            <a target="_blank" href="https://twitter.com/AnkitSultana" class="button">
+                @AnkitSultana
+            </a>
+            <a href="mailto:your@email.com" class="button">
+                mail
+            </a>
+            <a target="_blank" href="http://ankitsultana.me/blog/feed.xml" class="button">
+                rss
+            </a>
+        </div>
+    </div>
+    <div style="clear:both"></div>
+    <hr />
+    <div class="theme-footer">
+        <p class="alignable pull-left" style="display: inline-block">
+            Built with <a href="http://jekyllrb.com/" class="different-highlight underline">Jekyll</a> and <a href="http://ankitsultana.me/accent/" class="different-highlight underline">accent</a>
+        </p>
+    </div>
+</footer>
+
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="js/vendor/jquery.1.10.2.min.js"><\/script>')</script>
+    <script src="js/rrssb.min.js"></script>
+
+    
+        <script src="js/anchor.min.js"></script>
+        <script>
+        anchors.options.placement = 'right'
+        anchors.options.class = 'hide'
+        anchors.add()
+        anchors.remove('.post-title')
+        </script>
+    
+    
+        <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-69243698-7', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    
+</body>
