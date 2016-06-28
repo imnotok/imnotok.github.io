@@ -9,6 +9,24 @@
     
       
       <item>
+        <title>Some bloggers</title>
+        
+          <description>
+&lt;ol&gt;
+  &lt;li&gt;&lt;a href=&quot;http://blog.devtang.com/&quot;&gt;唐巧&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://onevcat.com&quot;&gt;喵神&lt;/a&gt;&lt;/li&gt;
+&lt;/ol&gt;
+</description>
+        
+        <pubDate>Tue, 28 Jun 2016 00:00:00 +0800</pubDate>
+        <link>
+        http://imnotok.net/some-bloggers.html</link>
+        <guid isPermaLink="true">http://imnotok.net/some-bloggers.html</guid>
+      </item>
+      
+    
+      
+      <item>
         <title>Features</title>
         
           <description>&lt;p&gt;This is &lt;span class=&quot;capsule&quot;&gt;accent&lt;/span&gt; a minimal, mobile friendly theme for &lt;span class=&quot;capsule&quot;&gt;Jekyll&lt;/span&gt;&lt;/p&gt;
