@@ -43,9 +43,7 @@ about_stub: >
 
 about_footer: true
 
-twitter_username: 
 github_username: imnotok
-facebook_id: 
 
 favicon: true
 favicon_location: "images/favicon.ico"
@@ -55,9 +53,6 @@ paginate: 10
 paginate_path: "/page/:num"
 tracking_id: UA-77734308-1 # GA Tracking ID
 
-# Social Stuff | open graph and twitter cards
-og_image: "images/accent.png" # This will show in facebook thumbnails
-twitter_image: "http://ankitsultana.me/images/accent.png?1234" # This will show in twitter cards
 
 ####################################
 ####################################

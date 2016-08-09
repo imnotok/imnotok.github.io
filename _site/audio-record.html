@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Audio Record</title>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="keywords" content="blog, accent, BJ.y, imnotok, jekyll">
+    <meta name="author" content="BJ.y">
+    
+    
+    
+    <meta name="description" content="accent is, as Trump would put it, the best
+">
+    <link href='https://fonts.googleapis.com/css?family=Roboto+Mono:400,300,500,700|Ubuntu:400,300,300italic,500,700|Montserrat' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/css/main.css">
+</head>
+<body>
+    <div class="wrapper">
+        <div class="main">
+            <nav class="navbar">
+                <a href="/">
+                    <span class="alignable pull-left back-outer">
+                        <span class="alignable pull-left back-inner">
+                        </span>
+                    </span>
+                </a>
+            </nav>
+            <div class="content container">
+    <div class="post-date">
+        <time>August 09, 2016 </time>
+    </div>
+    <h1 class="post-title">Audio Record</h1>
+    <p>iOS provides various framework to let you work with sound in your app. One of the frameworks that you can use to play and record audio file is the AV Foundation Framework. In this tutorial, I’ll walk you through the  the framework and show you how to manage audio recording</p>
+
+<h3 id="avaudiorecorder-">AVAudioRecorder ?</h3>
+<p>An instance of the AVAudioRecorder class, called an audio recorder, provides audio recording capability in your application. Using an audio recorder you can:</p>
+
+<ul>
+  <li>
+    <p>Record until the user stops the recording</p>
+  </li>
+  <li>
+    <p>Record for a specified duration</p>
+  </li>
+  <li>
+    <p>Pause and resume a recording</p>
+  </li>
+  <li>
+    <p>Obtain input audio-level data that you can use to provide level metering</p>
+  </li>
+</ul>
+
+<h3 id="how-to-initialize-an-avaudiorecorder">How to initialize an AVAudioRecorder</h3>
+
+<p>Apple development document</p>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithURL</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">url</span>  <span class="nf">settings</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span> <span class="n">id</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">settings</span>  <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="o">*</span><span class="p">)</span><span class="nv">outError</span> <span class="p">{</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>the url is the file system location to record to. And also need settings for the recording session,On success, an initialized AVAudioRecorder object. If nil, the outError parameter contains an NSError describing the failure.</p>
+
+<p>So we  need some steps,an examble for acc settting</p>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nf">configRecorderSettingWithSampleRate</span><span class="p">:(</span><span class="kt">float</span><span class="p">)</span><span class="nv">rate</span>
+                                              <span class="nf">bitRate</span><span class="p">:(</span><span class="kt">int</span><span class="p">)</span><span class="nv">bitRate</span> <span class="p">{</span>
+    <span class="n">NSMutableDictionary</span> <span class="o">*</span><span class="n">recordSettings</span> <span class="o">=</span> <span class="p">[[</span><span class="n">NSMutableDictionary</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">initWithCapacity</span><span class="p">:</span><span class="mi">10</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">setObject</span><span class="p">:[</span><span class="n">NSNumber</span> <span class="nf">numberWithInt</span><span class="p">:</span> <span class="n">kAudioFormatMPEG4AAC</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span> <span class="n">AVFormatIDKey</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">setObject</span><span class="p">:[</span><span class="n">NSNumber</span> <span class="nf">numberWithFloat</span><span class="p">:</span><span class="n">rate</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span> <span class="n">AVSampleRateKey</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">setObject</span><span class="p">:[</span><span class="n">NSNumber</span> <span class="nf">numberWithInt</span><span class="p">:</span><span class="mi">1</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span><span class="n">AVNumberOfChannelsKey</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">setObject</span><span class="p">:[</span><span class="n">NSNumber</span> <span class="nf">numberWithFloat</span><span class="p">:</span><span class="n">bitRate</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span><span class="n">AVEncoderBitRateKey</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">setObject</span><span class="p">:[</span><span class="n">NSNumber</span> <span class="nf">numberWithInt</span><span class="p">:</span><span class="mi">32</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span><span class="n">AVLinearPCMBitDepthKey</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">setObject</span><span class="p">:[</span><span class="n">NSNumber</span> <span class="nf">numberWithInt</span><span class="p">:</span> <span class="n">AVAudioQualityMedium</span><span class="p">]</span> <span class="nf">forKey</span><span class="p">:</span> <span class="n">AVEncoderAudioQualityKey</span><span class="p">];</span>
+    <span class="k">return</span>  <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">copy</span><span class="p">];</span>
+<span class="p">}</span></code></pre></figure>
+
+<p>So we can start a recording like this</p>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">startRecorderWithPath</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">savePath</span>
+                     <span class="nf">settings</span><span class="p">:(</span><span class="n">NSDictionary</span>  <span class="o">*</span><span class="p">)</span><span class="nv">settings</span>
+                        <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span><span class="n">__autoreleasing</span> <span class="o">*</span><span class="p">)</span><span class="nv">error</span> <span class="p">{</span>
+    
+    <span class="n">__autoreleasing</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">errorInfo</span> <span class="o">=</span> <span class="nb">nil</span><span class="p">;</span>
+    
+    <span class="n">AVAudioSession</span> <span class="o">*</span><span class="n">audioSession</span> <span class="o">=</span> <span class="p">[</span><span class="n">AVAudioSession</span> <span class="nf">sharedInstance</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">audioSession</span> <span class="nf">setCategory</span><span class="p">:</span><span class="n">AVAudioSessionCategoryPlayAndRecord</span> <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">errorInfo</span><span class="p">];</span>
+    <span class="k">if</span> <span class="p">(</span><span class="n">errorInfo</span> <span class="o">&amp;&amp;</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="n">errorInfo</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    <span class="p">[</span><span class="n">audioSession</span> <span class="nf">setActive</span><span class="p">:</span><span class="nb">YES</span> <span class="nf">error</span><span class="p">:</span><span class="o">&amp;</span><span class="n">errorInfo</span><span class="p">];</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">errorInfo</span> <span class="o">&amp;&amp;</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="n">errorInfo</span><span class="p">;</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    
+    
+    <span class="n">NSURL</span> <span class="o">*</span><span class="n">url</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSURL</span> <span class="nf">fileURLWithPath</span><span class="p">:</span><span class="n">savePath</span><span class="p">];</span>
+    <span class="n">AVAudioRecorder</span> <span class="o">*</span> <span class="n">recorder</span><span class="p">;</span>
+    <span class="n">recorder</span> <span class="o">=</span> <span class="p">[[</span> <span class="n">AVAudioRecorder</span> <span class="nf">alloc</span><span class="p">]</span>
+                <span class="nf">initWithURL</span><span class="p">:</span><span class="n">url</span>
+                <span class="nf">settings</span><span class="p">:</span><span class="n">settings</span>
+                <span class="nl">error:</span><span class="o">&amp;</span><span class="n">errorInfo</span><span class="p">];</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">errorInfo</span> <span class="o">&amp;&amp;</span> <span class="n">error</span><span class="p">)</span> <span class="p">{</span>
+        <span class="o">*</span><span class="n">error</span> <span class="o">=</span> <span class="n">errorInfo</span><span class="p">;</span>
+        <span class="n">NSLog</span><span class="p">(</span><span class="s">@"%@"</span><span class="p">,</span> <span class="n">errorInfo</span><span class="p">.</span><span class="n">localizedDescription</span><span class="p">);</span>
+        <span class="k">return</span><span class="p">;</span>
+    <span class="p">}</span>
+    
+    <span class="k">if</span> <span class="p">([</span><span class="n">recorder</span> <span class="nf">prepareToRecord</span><span class="p">]</span> <span class="o">==</span> <span class="nb">YES</span><span class="p">){</span>
+        <span class="p">[</span><span class="n">recorder</span> <span class="nf">record</span><span class="p">];</span>
+    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+
+</div>
+
+
+    <div class="container">
+    <hr />
+    
+        
+        
+            <div id="img-about">
+                <img class="about-img pull-left" src="images/temp.png">
+            </div>
+        
+        <div class="about-stub">
+            
+            <a class="different-highlight" href="about">
+                <h2 style="font-family: Montserrat">
+                    
+                        BJ.y
+                    
+                </h2>
+            </a>
+            
+                <p id="about-description" style="margin-top: 4px;">
+                    Keep this sentence less than 13 words or it won't look good.
+
+                </p>
+            
+        </div>
+    
+</div>
+<div style="clear:both"></div>
+
+
+
+        </div>
+    </div>
+    <footer>
+    
+
+    
+    <div class="container page-suggestion">
+        
+        
+            <a class="button alignable pull-right" href="http://imnotok.net/continuous-integration.html">
+                Continuous Integration &rarr;
+            </a>
+        
+    </div>
+    <div style="clear:both"></div>
+
+
+    
+    <hr />
+    <div class="user-footer">
+        <div class="copyright alignable pull-left">
+            
+                <h2> &copy;BJ.y</h2>
+            
+        </div>
+        <div class="alignable pull-right">
+            <a target="_blank" href="https://github.com/imnotok" class="button">
+                @imnotok
+            </a>
+            <a href="mailto:545350081@qq.com" class="button">
+                mail
+            </a>
+            <a target="_blank" href="http://imnotok.net/feed.xml" class="button">
+                rss
+            </a>
+        </div>
+    </div>
+
+</footer>
+
+    
+        <script src="js/anchor.min.js"></script>
+        <script>
+        anchors.options.placement = 'right'
+        anchors.options.class = 'hide'
+        anchors.add()
+        anchors.remove('.post-title')
+        </script>
+    
+    
+        <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-77734308-1', 'auto');
+  ga('send', 'pageview');
+
+</script>
+
+    
+</body>
