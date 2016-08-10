@@ -53,14 +53,22 @@
 
 <h3 id="how-to-initialize-an-avaudiorecorder">How to initialize an AVAudioRecorder</h3>
 
-<p>Apple development document</p>
+<p>To prepare for recording using an audio recorder:</p>
 
-<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithURL</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">url</span>  <span class="nf">settings</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span> <span class="n">id</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">settings</span>  <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="o">*</span><span class="p">)</span><span class="nv">outError</span> <span class="p">{</span>
+<ul>
+  <li>Specify a sound file URL.</li>
+  <li>Set up the audio session.</li>
+  <li>Configure the audio recorder’s initial state.</li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="n">instancetype</span><span class="p">)</span><span class="nf">initWithURL</span><span class="p">:(</span><span class="n">NSURL</span> <span class="o">*</span><span class="p">)</span><span class="nv">url</span> 
+                   <span class="nf">settings</span><span class="p">:(</span><span class="n">NSDictionary</span><span class="o">&lt;</span><span class="n">NSString</span> <span class="o">*</span><span class="p">,</span> <span class="n">id</span><span class="o">&gt;</span> <span class="o">*</span><span class="p">)</span><span class="nv">settings</span>  
+                      <span class="nf">error</span><span class="p">:(</span><span class="n">NSError</span> <span class="o">*</span> <span class="n">_Nullable</span> <span class="o">*</span><span class="p">)</span><span class="nv">outError</span> <span class="p">{</span>
 <span class="p">}</span></code></pre></figure>
 
 <p>the url is the file system location to record to. And also need settings for the recording session,On success, an initialized AVAudioRecorder object. If nil, the outError parameter contains an NSError describing the failure.</p>
 
-<p>So we  need some steps,an examble for acc settting</p>
+<p>an acc type record setting .for example</p>
 
 <figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="n">NSDictionary</span> <span class="o">*</span><span class="p">)</span><span class="nf">configRecorderSettingWithSampleRate</span><span class="p">:(</span><span class="kt">float</span><span class="p">)</span><span class="nv">rate</span>
                                               <span class="nf">bitRate</span><span class="p">:(</span><span class="kt">int</span><span class="p">)</span><span class="nv">bitRate</span> <span class="p">{</span>
@@ -74,7 +82,8 @@
     <span class="k">return</span>  <span class="p">[</span><span class="n">recordSettings</span> <span class="nf">copy</span><span class="p">];</span>
 <span class="p">}</span></code></pre></figure>
 
-<p>So we can start a recording like this</p>
+<p>to ensure optimum performance and quality, you need to pick the right audio format and audio codec type. see  <a href="https://developer.apple.com/library/prerelease/content/documentation/AudioVideo/Conceptual/MultimediaPG/UsingAudio/UsingAudio.html">Multimedia Programming Guide</a>           <br />
+so we can start a recording like this (In production code, you would include appropriate error handling)</p>
 
 <figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">startRecorderWithPath</span><span class="p">:(</span><span class="n">NSString</span> <span class="o">*</span><span class="p">)</span><span class="nv">savePath</span>
                      <span class="nf">settings</span><span class="p">:(</span><span class="n">NSDictionary</span>  <span class="o">*</span><span class="p">)</span><span class="nv">settings</span>
@@ -114,6 +123,89 @@
         <span class="p">[</span><span class="n">recorder</span> <span class="nf">record</span><span class="p">];</span>
     <span class="p">}</span>
 <span class="p">}</span></code></pre></figure>
+
+<p>some times we also need a callback to tell the recording progress, some exception handling When the recording is interrupted by the call.
+To handle interruptions and the completion of recording, we need to add the AVAudioRecorderDelegate protocol names to the interface declaration for your implementation.</p>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="c1">// add notification
+</span><span class="p">[[</span><span class="n">NSNotificationCenter</span> <span class="nf">defaultCenter</span><span class="p">]</span>
+     <span class="nf">addObserver</span><span class="p">:</span><span class="n">self</span>
+     <span class="nf">selector</span><span class="p">:</span><span class="k">@selector</span><span class="p">(</span><span class="n">handleInterruption</span><span class="o">:</span><span class="p">)</span>
+     <span class="n">name</span><span class="o">:</span><span class="n">AVAudioSessionInterruptionNotification</span>
+     <span class="n">object</span><span class="o">:</span><span class="p">[</span><span class="n">AVAudioSession</span> <span class="nf">sharedInstance</span><span class="p">]];</span>
+     
+<span class="c1">// Handle AVAudioSessionInterruptionNotification
+</span><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="nf">handleInterruption</span><span class="p">:(</span><span class="n">NSNotification</span> <span class="o">*</span><span class="p">)</span><span class="nv">notification</span> <span class="p">{</span>
+    <span class="n">NSDictionary</span> <span class="o">*</span><span class="n">info</span> <span class="o">=</span> <span class="n">notification</span><span class="p">.</span><span class="n">userInfo</span><span class="p">;</span>
+    <span class="n">AVAudioSessionInterruptionType</span> <span class="n">type</span> <span class="o">=</span>
+    <span class="p">[</span><span class="n">info</span><span class="p">[</span><span class="nf">AVAudioSessionInterruptionTypeKey</span><span class="p">]</span> <span class="nf">unsignedIntegerValue</span><span class="p">];</span>
+    
+    <span class="k">if</span> <span class="p">(</span><span class="n">type</span> <span class="o">==</span> <span class="n">AVAudioSessionInterruptionTypeBegan</span> <span class="o">&amp;&amp;</span> <span class="n">notification</span><span class="p">.</span><span class="n">object</span> <span class="o">==</span> <span class="p">[</span><span class="n">AVAudioSession</span> <span class="nf">sharedInstance</span><span class="p">])</span> <span class="p">{</span>
+        <span class="c1">// Handle AVAudioSessionInterruptionTypeBegan
+</span>        <span class="c1">// Save state and context
+</span>        <span class="c1">// Update user interface
+</span>    <span class="p">}</span> <span class="k">else</span> <span class="p">{</span>
+        <span class="c1">// Handle AVAudioSessionInterruptionTypeEnded
+</span>        <span class="c1">// Restore state and context
+</span>        <span class="c1">// Reactivate audio session if app appropriate
+</span>        <span class="c1">// Update user interface
+</span>    <span class="p">}</span>
+<span class="p">}</span></code></pre></figure>
+
+<h3 id="audiohelper">AudioHelper</h3>
+
+<p>A record class which is userfriendly and esay to use by developers.</p>
+
+<h3 id="how-to-use-audiohelper">How to use AudioHelper</h3>
+
+<ul>
+  <li><strong>config AudioHelper</strong></li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">configRecord</span> <span class="p">{</span>
+    <span class="c1">// initialize an AudioHelper
+</span>    <span class="n">AudioHelper</span> <span class="o">*</span><span class="n">audioHelper</span> <span class="o">=</span> <span class="p">[[</span><span class="n">AudioHelper</span> <span class="nf">alloc</span><span class="p">]</span> <span class="nf">init</span><span class="p">];</span>
+    <span class="c1">// config the recording settings, type, sample rate, bit rate
+</span>    <span class="p">[</span><span class="n">audioHelper</span> <span class="nf">configRecorderSettingWithEncodingType</span><span class="p">:</span><span class="n">kRecordType</span> <span class="nf">sampleRate</span><span class="p">:</span><span class="n">kSampleRate</span> <span class="n">bitRate</span><span class="o">:</span><span class="n">kBitRate</span><span class="p">];</span>
+    
+    <span class="c1">//config the power peak, recording progress, completion
+</span>    <span class="p">[</span><span class="n">audioHelper</span>
+     <span class="nf">configChannelPowerBlockWithPowerBlock</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="kt">float</span> <span class="n">peakPowerForChannel</span><span class="p">)</span> <span class="p">{</span>
+         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"power:[%f]"</span><span class="p">,</span> <span class="n">peakPowerForChannel</span><span class="p">);</span>
+     <span class="p">}</span>
+     <span class="nf">progress</span><span class="p">:</span><span class="o">^</span><span class="p">(</span><span class="n">NSTimeInterval</span> <span class="n">times</span><span class="p">)</span> <span class="p">{</span>
+         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"recording times:[%lf]"</span><span class="p">,</span> <span class="n">times</span><span class="p">);</span>
+     <span class="p">}</span>
+     <span class="n">recordStopBlock</span><span class="o">:^</span><span class="p">(</span><span class="n">AudioStopType</span> <span class="n">stopType</span><span class="p">,</span> <span class="n">NSString</span> <span class="o">*</span><span class="n">path</span><span class="p">,</span> <span class="n">NSTimeInterval</span> <span class="n">times</span><span class="p">)</span> <span class="p">{</span>
+         <span class="n">NSLog</span><span class="p">(</span><span class="s">@"path:[%@], times:[%.2f]"</span><span class="p">,</span> <span class="n">path</span><span class="p">,</span> <span class="n">times</span><span class="p">);</span>
+     <span class="p">}];</span>
+<span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li><strong>start recording</strong></li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="k">-</span> <span class="p">(</span><span class="kt">void</span><span class="p">)</span><span class="n">startRecording</span> <span class="p">{</span>
+    <span class="n">__autoreleasing</span> <span class="n">NSError</span> <span class="o">*</span><span class="n">error</span><span class="p">;</span>
+    <span class="n">NSString</span> <span class="o">*</span><span class="n">path</span> <span class="o">=</span> <span class="p">[</span><span class="n">NSSearchPathForDirectoriesInDomains</span><span class="p">(</span><span class="n">NSDocumentDirectory</span><span class="p">,</span> <span class="n">NSUserDomainMask</span><span class="p">,</span> <span class="nb">YES</span><span class="p">)</span> <span class="nf">firstObject</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">path</span> <span class="nf">stringByAppendingString</span><span class="p">:</span><span class="s">@"test.caf"</span><span class="p">];</span>
+    <span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">audioHelper</span> <span class="nf">startRecorderWithPath</span><span class="p">:</span><span class="n">path</span> <span class="nf">maxTime</span><span class="p">:</span><span class="mi">60</span><span class="p">.</span><span class="mi">0</span> <span class="n">error</span><span class="o">:&amp;</span><span class="n">error</span><span class="p">];</span>
+<span class="p">}</span></code></pre></figure>
+
+<ul>
+  <li><strong>stop, pause, resume</strong></li>
+</ul>
+
+<figure class="highlight"><pre><code class="language-objc" data-lang="objc"><span class="c1">// stop
+</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">audioHelper</span> <span class="nf">stopRecord</span><span class="p">];</span>
+<span class="c1">//stop and delete the temp file
+</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">audioHelper</span> <span class="nf">stopAndDeleteFile</span><span class="p">];</span>
+<span class="c1">// pause
+</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">audioHelper</span> <span class="nf">pauseRecord</span><span class="p">];</span>
+<span class="c1">// resume
+</span><span class="p">[</span><span class="n">self</span><span class="p">.</span><span class="n">audioHelper</span> <span class="nf">resumeRecord</span><span class="p">];</span></code></pre></figure>
+
+<p>for more infomation .see <a href="">github</a></p>
 
 
 </div>
